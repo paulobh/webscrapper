@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+lxml  # If you're using lxml
+openpyxl
+pytest  # For testing
+pandas
+matplotlib
