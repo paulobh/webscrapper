@@ -1,9 +1,18 @@
 # src/utils.py
 import requests
+from bs4 import BeautifulSoup
+
+from urllib.parse import urljoin, unquote
+import re
+
+from pathlib import Path
+
+import pandas as pd
+
 import csv
 import json
 import os
-from src.config import TARGET_URL, OUTPUT_FILE, DOWNLOAD_DIR
+from config import TARGET_URL, OUTPUT_FILE, DOWNLOAD_DIR, mapping_post_country
 
 
 def save_data(data, filename):
@@ -39,6 +48,15 @@ def download_file(url, filepath):
         response = requests.get(url, stream=True)  # stream=True for large files
         response.raise_for_status()  # Raise an exception for bad status codes
 
+        # Check for existing file and size
+        if os.path.exists(filepath):
+            local_size = os.path.getsize(filepath)
+            remote_size = int(response.headers.get('content-length', 0)) #get the size of the file from the header.
+
+            if local_size == remote_size and remote_size != 0:
+                print(f"File {filepath} already exists and has the same size. Skipping download.")
+                return True  # File exists and sizes match, no download needed
+
         with open(filepath, 'wb') as f:  # Open in binary write mode ('wb')
             for chunk in response.iter_content(chunk_size=8192):  # Download in chunks
                 f.write(chunk)
@@ -50,3 +68,9 @@ def download_file(url, filepath):
     except Exception as e:
         print(f"Error saving file {filepath}: {e}")
         return False
+    
+
+
+    
+
+

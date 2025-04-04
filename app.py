@@ -5,9 +5,14 @@ Here's our first attempt at using data to create a table:
 
 import streamlit as st
 import pandas as pd
+import json
 import matplotlib.pyplot as plt
 
-df = pd.read_csv(r"data\dataframe\all_data.csv")
+df = pd.read_csv(r"data\dataframe\all_data_NIV Issuances by Post and Visa Class.csv")
+
+with open("data\dataframe\post_country.json") as f:
+    mapping_post_country = json.load(f)
+df["Country"] = df["Post"].map(mapping_post_country)
 
 visa_types = list(df["Visa Class"].unique())
 visa_default = visa_types.index("L1")
