@@ -8,6 +8,7 @@ import pandas as pd
 import json
 import matplotlib.pyplot as plt
 from src import config
+from pathlib import Path
 
 
 # cols = st.columns(2)
@@ -15,7 +16,8 @@ from src import config
 # with cols[0]:
 "NIV Issuances by Post and Visa Class"
 
-df = pd.read_csv(r"data\dataframe\all_data_NIV Issuances by Post and Visa Class.csv")
+DATA_FILENAME = Path(__file__).parent/'data/dataframe/all_data_NIV Issuances by Post and Visa Class.csv'
+df = pd.read_csv(DATA_FILENAME)
 
 with open("data\dataframe\post_country.json") as f:
     mapping_post_country = json.load(f)
@@ -40,7 +42,8 @@ st.line_chart(df_pivot)
 # with cols[1]:
 "NIV Issuances by Nationality and Visa Class"
 
-df = pd.read_csv(r"data\dataframe\all_data_NIV Issuances by Nationality and Visa Class.csv")
+DATA_FILENAME = Path(__file__).parent/'data/dataframe/all_data_NIV Issuances by Nationality and Visa Class.csv'
+df = pd.read_csv(DATA_FILENAME)
 df["Visa Class root"] = df["Visa Class"].str[0]
 df_visa_mapping = df[["Visa Class root", "Visa Class"]].drop_duplicates().reset_index(drop=True)
 df_visa_mapping = df_visa_mapping.groupby(["Visa Class root"], as_index=False)["Visa Class"].apply(list)
