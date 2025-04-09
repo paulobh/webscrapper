@@ -19,7 +19,8 @@ from pathlib import Path
 DATA_FILENAME = Path(__file__).parent/'data/dataframe/all_data_NIV Issuances by Post and Visa Class.csv'
 df = pd.read_csv(DATA_FILENAME)
 
-with open("data\dataframe\post_country.json") as f:
+DATA_FILENAME = Path(__file__).parent/'data/dataframe/post_country.json'
+with open(DATA_FILENAME) as f:
     mapping_post_country = json.load(f)
 df["Country"] = df["Post"].map(mapping_post_country)
 
