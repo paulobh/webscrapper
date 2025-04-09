@@ -12,7 +12,7 @@ import pandas as pd
 import csv
 import json
 import os
-from config import TARGET_URL, OUTPUT_FILE, DOWNLOAD_DIR, mapping_post_country
+from src.config import TARGET_URL, OUTPUT_FILE, DOWNLOAD_DIR, mapping_post_country
 
 
 def save_data(data, filename):

@@ -5,3 +5,5 @@ openpyxl
 pytest  # For testing
 pandas
 matplotlib
+jupyterlab
+streamlit 
